@@ -1,7 +1,7 @@
 defmodule Kounter do
 	defstruct [kount: 0]
 
-	def new(val) when is_integer(val) do
+	def new(val \\ 0) when is_integer(val) do
 		%__MODULE__{kount: val}
 	end
 
