@@ -1,23 +1,23 @@
 defmodule Kounter do
-	defstruct [kount: 0]
+	alias Kounter.Server
 
-	def new(val \\ 0) when is_integer(val) do
-		%__MODULE__{kount: val}
+	def start_link(num \\ 0) do
+		GenServer.start_link(Server, num)
 	end
 
-	def inc(%__MODULE__{kount: val}=new_kounter) do
-		%{new_kounter | kount: val + 1}
+	def add(counter_pid, value) do
+		GenServer.call(counter_pid, {:add, value})
 	end
 
-	def dec(%__MODULE__{kount: val}=new_kounter) do
-		%{new_kounter | kount: val - 1}
+	def show(counter_pid) do
+		GenServer.call(counter_pid, :show)
 	end
 
-	def add(%__MODULE__{kount: val}=new_kounter, x) when is_integer(x) do
-		%{new_kounter | kount: val + x}
+	def dec(counter_pid) do
+		GenServer.cast(counter_pid, :dec)
 	end
 
-	def show(data) do
-		inspect data.kount
+	def inc(counter_pid) do
+		GenServer.cast(counter_pid, :inc)
 	end
 end
