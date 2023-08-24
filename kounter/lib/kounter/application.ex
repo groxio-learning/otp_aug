@@ -8,13 +8,13 @@ defmodule Kounter.Application do
   @impl true
   def start(_type, _args) do
     children = [
-      # Starts a worker by calling: Kounter.Worker.start_link(arg)
-      # {Kounter.Worker, arg}
+      # Starts a worker by calling: Kounter.Server.start_link(arg)
+      {Kounter.Server, 0}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options
-    opts = [strategy: :one_for_one, name: Kounter.Supervisor]
+    opts = [strategy: :one_for_one, name: :sup]
     Supervisor.start_link(children, opts)
   end
 end
