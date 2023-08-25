@@ -1,18 +1,8 @@
 defmodule Boarden do
-  @moduledoc """
-  Documentation for `Boarden`.
-  """
-
-  @doc """
-  Hello world.
-
-  ## Examples
-
-      iex> Boarden.hello()
-      :world
-
-  """
-  def hello do
-    :world
+  def start(name) do
+    DynamicSupervisor.start_child(:dsup, {Boarden.Server, name})
   end
+
+  defdelegate check(name, guess), to: Boarden.Server
+
 end
