@@ -4,7 +4,8 @@ defmodule Boarden.Server do
   alias Boarden.Board
 
   @impl true
-  def init(_) do
+  def init(name) do
+    IO.puts "Starting #{name}"
     {:ok, Board.new()}
   end
 
@@ -21,13 +22,20 @@ defmodule Boarden.Server do
 
   # Client API
 
-  def start_link(_) do
-    GenServer.start_link(__MODULE__, nil, name: :server)
+  def start_link(name) do
+    GenServer.start_link(__MODULE__, name, name: name)
   end
 
   def check(pid \\ :server, guess) do
     GenServer.call(pid, {:check, guess})
     |> IO.puts
+  end
+
+  def child_spec(name) do
+    %{
+      id: name,
+      start: {Boarden.Server, :start_link, [name]}
+    }
   end
 
   def show(pid \\ :server) do
