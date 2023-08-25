@@ -9,7 +9,7 @@ defmodule Boarden.Application do
   def start(_type, _args) do
     children = [
       # Starts a worker by calling: Boarden.Worker.start_link(arg)
-      # {Boarden.Worker, arg}
+      {Boarden.Server,0}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
